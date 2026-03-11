@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 조회</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<style>
+    body{
+        margin: 0;
+        min-height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        background-image: url("/img/mangspring.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
+        font-family: Arial;
+    }
+    .container {
+        width: 600px;
+        background: rgba(255,255,255,0.8);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    /* 상단 */
+    .read-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .read-header h1{
+        margin: 0;
+        font-size: 25px;
+        padding-left: 180px;
+    }
+    .form-control{
+        width: 100%;
+        padding: 10px 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: 0.2s;
+        flex: 6;
+    }
+    .form-control:focus{
+        border-color: #ff6b81;
+        box-shadow: 0 0 5px rgb(255, 107, 129,0.4);
+    }
+    .form-label{
+        font-weight: bold;
+        margin-bottom: 6px;
+        display: block;
+        flex: 1;
+    }
+    .mb-3{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .content-group{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    #content {
+        min-height: 200px;
+        overflow: hidden;
+        text-align: center;
+    }
+    button {
+        cursor: pointer;
+    }
+    .btn-group{
+        display:flex;
+        gap:10px;
+        margin-top:15px;
+        margin-left:auto;
+        width:fit-content;
+    }
+
+    .btn-group button{
+        border-radius:8px !important;
+    }
+
+    .read-header button {
+        background:none;
+        border:none;
+        padding:0;
+        cursor:pointer;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="read-header">
+            <button type="button" onclick="moveList()">
+                <span class="material-symbols-outlined" style="color: black;">
+                    arrow_back
+                </span>
+            </button>
+            <h1>게시글 조회</h1>
+        </div>
+        <form action="/Post/insert" method="post" th:object="${post}">
+            <div class="mb-3">
+                <label for="" class="form-label">제목</label>
+                <input type="text" class="form-control" id=title th:field="*{title}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">작성자</label>
+                <input type="text" class="form-control" id=writer th:field="*{writer}" readonly>
+            </div>
+            <div class="mb-3 content-group">
+                <label for="" class="form-label">내용</label>
+                <input type="text" class="form-control" id=content th:field="*{content}" readonly>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-dark" onclick="moveList()">목록</button>
+                <button type="button" class="btn btn-dark" onclick="moveUpdate()">수정</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:inline="javascript">
+        let no = '[[${post.no}]]'
+
+        function moveList() {
+            location.href = '/Post/list'
+        }
+
+        function moveUpdate() {
+            location.href = '/Post/update?PostNo=' + no
+        }
+    </script>
+</body>
+</html>

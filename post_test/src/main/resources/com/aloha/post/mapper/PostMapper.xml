@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" --> 
+<mapper namespace="com.aloha.post.mapper.PostMapper">
+    <!-- resultMap / join -->
+    <resultMap type="Post" id="PostMap">
+        <id property="no" column="no" />
+        <result property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="writer" column="writer" />
+        <result property="content" column="content" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+    <!-- 게시글 목록 -->
+    <select id="list" resultMap="PostMap">
+        SELECT *
+        FROM post
+        ORDER BY no DESC
+    </select>
+    <!-- 게시글 조회 -->
+    <select id="select" resultMap="PostMap">
+        SELECT *
+        FROM post
+        WHERE no = #{no}
+    </select>
+    <!-- 게시글 등록 -->
+    <insert id="insert" parameterType="Post" useGeneratedKeys="true" keyProperty="no">
+        INSERT INTO post ( id, title, writer, content )
+        VALUES ( #{id}, #{title}, #{writer}, #{content} )
+    </insert>
+    <!-- 게시글 수정 -->
+    <update id="update">
+        UPDATE post
+            <set>
+                <if test="title != null">title = #{title},</if>
+                <if test="writer != null">writer = #{writer},</if>
+                <if test="content != null">content = #{content},</if>
+                updated_at = now()
+            </set>
+        WHERE no = #{no}
+    </update>
+    <!-- 게시글 삭제 -->
+    <delete id="delete">
+        DELETE FROM post
+        WHERE no = #{no}
+    </delete>
+
+    <!-- 페이징 목록 -->
+    <select id="page" resultMap="PostMap">
+        SELECT *
+        FROM post
+        ORDER BY no DESC
+        LIMIT #{index}, #{size}
+    </select>
+    <select id="count" resultType="long">
+        SELECT COUNT(*)
+        FROM post
+    </select>
+</mapper>
