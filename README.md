@@ -5,7 +5,7 @@ Post_TEST_안영아
 - sql
 
 # 소스코드
-## 로직
+로직
 - controller
     PostController.java
 - service
@@ -17,7 +17,7 @@ Post_TEST_안영아
 - domain
     Post.java
     Page.java (pagination)
-## 화면
+화면
 - templates
     index.html
     Post
@@ -25,6 +25,3 @@ Post_TEST_안영아
         read.html
         insert.html
         update.html
-## 추가
-- File (썸네일)
-
