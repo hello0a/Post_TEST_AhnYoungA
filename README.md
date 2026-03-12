@@ -17,6 +17,7 @@ Post_TEST_안영아
 - domain
     - Post.java
     - Page.java (pagination)
+#
 화면
 - templates
     - index.html
