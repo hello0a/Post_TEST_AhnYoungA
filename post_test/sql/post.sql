@@ -1,3 +1,4 @@
+-- Active: 1770210803187@@127.0.0.1@3306@aloha
 DROP TABLE IF EXISTS `post`;
 
 CREATE TABLE `post` (

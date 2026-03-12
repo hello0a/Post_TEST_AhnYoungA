@@ -101,6 +101,90 @@
         padding:0;
         cursor:pointer;
     }
+
+    /* toast 위치 */
+    .toast-container{
+        position:fixed;
+        top:50px;              
+        left:50%;
+
+        transform:translateX(-50%);
+        z-index:1000;
+
+        will-change: transform, opacity;
+    }
+
+    /* toast 디자인 */
+    .delete-toast{
+        background:white;
+        border:1px solid black;
+        border-radius:10px;
+        padding:15px 20px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.15);
+        display:none;
+    }
+
+    /* 버튼 영역 */
+    .toast-buttons{
+        margin-top:10px;
+        display:flex;
+        gap:10px;
+        justify-content:flex-end;
+    }
+
+    /* 삭제 버튼 */
+    .btn-confirm{
+        background:black;
+        color:white;
+        border:none;
+        padding:6px 12px;
+        border-radius:6px;
+        cursor:pointer;
+    }
+
+    /* 취소 버튼 */
+    .btn-cancel{
+        background:#ddd;
+        border:none;
+        padding:6px 12px;
+        border-radius:6px;
+        cursor:pointer;
+    }
+
+    .toast-enter {
+        animation: toast-pop 0.35s ease forwards;
+        }
+        @keyframes toast-pop {
+        0% {
+            opacity: 0;
+            transformp: translateX(-12px) scale(0.85);
+        }
+        60% {
+            opacity: 1;
+            transform: translate(0) scale(1.05);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+    }
+
+    .toast-exit {
+        animation: toast-out 0.25s ease forwards;
+        }
+        @keyframes toast-out {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        40% {
+            transform: scale(1.05);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.75);
+        }
+    }
 </style>
 <body>
     <div class="container">
@@ -130,6 +214,18 @@
                 <button type="submit" class="btn btn-dark" onclick="moveUpdate()">수정</button>
                 <button type="button" class="btn btn-dark btn-delete" onclick="actionDelete()">삭제</button>
             </div>
+            <!-- 삭제 확인 Toast -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="deleteToast" class="toast delete-toast">
+                    <div class="toast-body">
+                        정말 삭제하시겠습니까?
+                        <div class="toast-buttons">
+                            <button class="btn-confirm" onclick="confirmDelete()">삭제</button>
+                            <button class="btn-cancel" onclick="closeToast()">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
@@ -141,12 +237,26 @@
         }
 
         let $form = document.getElementById("form")
-        function actionDelete() {
-            let check = confirm('정말로 삭제하시겠습니다?')
-            if (check) {
-                $form.action = '/Post/delete?PostNo=' + no
-                $form.submit()
-            }
+        let toast = document.getElementById("deleteToast")
+
+        function actionDelete(){
+            toast.style.display = "block"
+            toast.classList.remove("toast-exit")
+            toast.classList.add("toast-enter")
+        }
+
+        function closeToast(){
+            toast.classList.remove("toast-enter")
+            toast.classList.add("toast-exit")
+
+            setTimeout(()=>{
+                toast.style.display = "none"
+            },250)
+        }
+
+        function confirmDelete(){
+            $form.action = '/Post/delete?PostNo=' + no
+            $form.submit()
         }
     </script>
 </body>

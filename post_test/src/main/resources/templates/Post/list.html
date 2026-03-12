@@ -58,6 +58,7 @@
         width:100%;
         border-collapse:collapse;
         margin-top:10px;
+        margin-bottom:30px;
     }
 
     th{
@@ -94,6 +95,42 @@
     .col-3{ width:50%; }
     .col-2{ width:15%; }
     .col-4{ width:20%; }
+
+    /* pagination */
+    .pagination{
+        margin-top:20px;
+    }
+
+    /* 기본 페이지 버튼 */
+    .pagination .page-link{
+        width:40px;
+        height:40px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        padding:0;
+        line-height:1;
+
+        color:black;                 
+        background:white;            
+        border:1px solid black;      
+    }
+
+    /* hover 효과 */
+    .pagination .page-link:hover{
+        background:black;
+        color:white;
+        border:1px solid black;
+    }
+
+    /* active 페이지 */
+    .pagination .active .page-link{
+        background:black;
+        color:white;
+        border:1px solid black;
+    }
 </style>
 
 <body>
@@ -135,35 +172,45 @@
             </th:block>
         </table>
         <!-- 페이지 -->
-        <nav aria-label="Page navigation" th:object="${page}" class="d-flex justify-content-center">
-            <ul class="page">
+        <!-- 페이지 번호 -->
+        <nav aria-label="Page navigation" th:object="${page}"
+            class="d-flex justify-content-center">
+            <ul class="pagination">
+                <!-- [첫] -->
                 <li class="page-item">
+                        <!-- Uri 빌더 -->
                     <a class="page-link" th:href="@{ ${pageUri } + '&page=' + *{first} }">
+                        <!-- &laquo : << 이 기호! -->
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item" th:if="${page.page != page.first}">
+                <!-- [이전] -->
+                <li class="page-item" th:if="*{page != first}">
                     <a class="page-link" th:href="@{${pageUri } + '&page=' + *{prev} }">
                         <span aria-hidden="true">&lsaquo;</span>
                     </a>
                 </li>
-                    <th:block th:each="p : ${ #numbers.sequence( page.start, page.end ) }">
-                        <li class="page-item" th:classappend="${page.page == page} ? 'active' : '' " aria-current="page">
-                            <a class="page-link" th:href="@{${pageUri } + '&page=' + ${page} }" th:text="${page}"></a>
+                <!-- [번호] -->
+                    <th:block th:each="num : *{ #numbers.sequence( start, end ) }">
+                        <!-- ${page.page == num} th:each 안의 num 이므로 * 아닌 $ -->
+                        <li class="page-item" th:classappend="${page.page == num} ? 'active' : '' " aria-current="page">
+                            <a class="page-link" th:href="@{${pageUri } + '&page=' + ${num} }" th:text="${num}"></a>
                         </li>
                     </th:block>
-                <li class="page-item" th:if="${page.page != page.last}">
+                    <!-- [다음] -->
+                <li class="page-item" th:if="*{page != last}">
                     <a class="page-link" th:href="@{${pageUri } + '&page=' + *{next} }" >
                         <span aria-hidden="true">&rsaquo;</span>
                     </a>
                 </li>
+                    <!-- [마지막] -->
                 <li class="page-item">
                     <a class="page-link" th:href="@{${pageUri } + '&page=' + *{last} }">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
-            </nav>
+        </nav>
     </div>
 </body>
 </html>

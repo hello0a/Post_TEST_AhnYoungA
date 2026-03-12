@@ -4,36 +4,36 @@ import lombok.Data;
 
 @Data
 public class Page {
-    // 페이징 기본값
-    private static final long PAGE_NUM = 1;   // 현재 페이지 번호 기본값
-    private static final long SIZES = 10;      // 페이지당 게시글 수 기본값
-    private static final long COUNT = 10;     // 노출 페이지 개수 기본값
-    // ✅ 필수 정보
-    private long page;
-    private long size;
-    private long count;
-    private long total;
-    // ⭐ 수식 정보
-    private long start;
-    private long end;
-    private long first;
-    private long last;
-    private long prev;
-    private long next;
-    private long index;
-    // 생성자
+    // 페이지 기본값
+    private static final long PAGE = 1;     // 현재 페이지 번호 기본값
+    private static final long SIZE = 10;    // 페이지당 데이터 수 기본값
+    private static final long COUNT = 10;   // 노출 페이지 수 기본값
+
+    // 필수 정보
+    private long page;      // 현재 번호
+    private long size;      // 페이지당 데이터 수
+    private long count;     // 노출 페이지 수
+    private long total;     // 전체 데이터 수
+
+    // 수식 정보
+    private long start;     // 시작 번호
+    private long end;     // 끝 번호
+    private long first;     // 첫 번호
+    private long last;     // 마지막 번호
+    private long prev;     // 이전 번호
+    private long next;     // 다음 번호
+    private long index;     // 순서 번호
+
+    
     public Page() {
         this(0);
     }
-    // 데이터 개수
     public Page(long total) {
-        this(PAGE_NUM, total);
+        this(PAGE, total);
     }
-    // 현재 번호, 데이터 개수
     public Page(long page, long total) {
-        this(page, SIZES, COUNT, total);
+        this(page, SIZE, COUNT, total);
     }
-    // 필수 정보
     public Page(long page, long size, long count, long total) {
         this.page = page;
         this.size = size;
@@ -41,12 +41,8 @@ public class Page {
         this.total = total;
         calc();
     }
-    // setter
-    // * 데이터 개수 지정 후, 페이지 수식 재계산
-    public void setTotal(long total) {
-        this.total = total;
-        calc();
-    }
+
+
     // 페이징 처리 수식
     public void calc() {
         // 첫 번호
@@ -54,15 +50,21 @@ public class Page {
         // 마지막 번호
         this.last = (this.total - 1) / size + 1;
         // 시작 번호
-        this.start = ( (page-1) / count ) * count + 1;
+        this.start = ((page-1) / count) * count + 1;
         // 끝 번호
-        this.end = ( (page-1) / count + 1 ) * count;
-        if( this.end > this.last ) this.end = this.last;
+        this.end = ((page-1) / count + 1) * count;
+        // 끝 번호와 마지막 번호 중 제일 작은 번호가 끝 번호!
+        this.end = Math.min( this.end, this.last);
+
         // 이전 번호
-        this.prev = this.page - 1;
+        this.prev = this.page -1;
         // 다음 번호
-        this.next = this.page + 1;
+        this.next = this.page +1;
         // 데이터 순서 번호
         this.index = (this.page - 1) * this.size;
+    }
+    public void setTotal(long total) {
+        this.total = total;
+        calc();
     }
 }
