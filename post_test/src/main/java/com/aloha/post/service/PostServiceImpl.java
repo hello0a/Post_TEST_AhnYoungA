@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.aloha.post.domain.Page;
-import com.aloha.post.domain.Post;
+import com.aloha.post.dto.Page;
+import com.aloha.post.dto.Post;
 import com.aloha.post.mapper.PostMapper;
 
 import lombok.RequiredArgsConstructor;

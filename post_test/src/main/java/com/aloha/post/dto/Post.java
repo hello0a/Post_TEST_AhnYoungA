@@ -1,4 +1,4 @@
-package com.aloha.post.domain;
+package com.aloha.post.dto;
 
 import java.util.Date;
 import java.util.UUID;

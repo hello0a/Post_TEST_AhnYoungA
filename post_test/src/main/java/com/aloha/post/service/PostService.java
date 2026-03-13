@@ -2,8 +2,8 @@ package com.aloha.post.service;
 
 import java.util.List;
 
-import com.aloha.post.domain.Page;
-import com.aloha.post.domain.Post;
+import com.aloha.post.dto.Page;
+import com.aloha.post.dto.Post;
 
 public interface PostService {
     List<Post> list() throws Exception;

@@ -1,4 +1,4 @@
-package com.aloha.post.domain;
+package com.aloha.post.dto;
 
 import lombok.Data;
 

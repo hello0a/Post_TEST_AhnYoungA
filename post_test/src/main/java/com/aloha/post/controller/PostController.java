@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.aloha.post.domain.Page;
-import com.aloha.post.domain.Post;
+import com.aloha.post.dto.Page;
+import com.aloha.post.dto.Post;
 import com.aloha.post.service.PostService;
 
 import lombok.RequiredArgsConstructor;

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.aloha.post.domain.Page;
-import com.aloha.post.domain.Post;
+import com.aloha.post.dto.Page;
+import com.aloha.post.dto.Post;
 
 @Mapper
 public interface PostMapper {
